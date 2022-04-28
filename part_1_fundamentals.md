@@ -1,6 +1,6 @@
 # Technology fundamentals for D3.js - HTML, CSS, SVG, Javascript
 
-A tutorial by [Kanit "Ham" Wongsuphasawat](http://kanitw.yellowpigz.com/) (@kanitw), [Jane Hoffswell](https://homes.cs.washington.edu/~jhoffs/#CurriculumVitae), and [Dominik Moritz](http://homes.cs.washington.edu/~domoritz/) (@domoritz)
+A tutorial by [Kanit "Ham" Wongsuphasawat](http://kanitw.yellowpigz.com/) (@kanitw), [Jane Hoffswell](https://homes.cs.washington.edu/~jhoffs/#CurriculumVitae), and [Dominik Moritz](http://homes.cs.washington.edu/~domoritz/) (@domoritz)  
 [Interactive Data Lab, University of Washington](http://idl.cs.washington.edu/)
 
 ## Notes

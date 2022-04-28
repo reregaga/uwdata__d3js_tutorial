@@ -1,0 +1,380 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>HTML</h1>
+<iframe srcdoc='
+<!-- This is the comment syntax. -->
+<h1>HTML Basics</h1>
+<p>
+<strong>HTML</strong> is designed for <em>marking up text</em> by adding tags such as <code>&lt;p&gt;</code> to create HTML elements.</p>
+<p>
+HTML tags begin with <code>&lt;</code> and end with <code>&gt;</code>.
+Tags often occur in pairs of opening and closing tags.
+Some tags such as <code>&lt;img&gt;</code> always occur alone.
+Those tags  usually (but not required to) have trailing slash.
+</p>
+<p>
+Tags can have attributes.  For example, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a"><code>&lt;a&gt;</code></a> tag has <code>href</code> attribute for defining link target.  Similarly, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img"><code>&lt;img&gt;</code></a> tag has <code>src</code> attribute for defining image source.
+</p>
+<p>
+<strong>example image:</strong>
+<img src="https://avatars3.githubusercontent.com/u/5448960?v=3&s=100"/>
+<!-- img is self-closing here -->
+</p>
+' width="100%" height="400px"></iframe>
+
+
+<h1 id="test">HTML - div, span</h1>
+<iframe srcdoc='
+<div id="first-div">
+A <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div"><code>div</code></a> is a generic block-level container.
+</div>
+<div id="second-div">
+A <code>div</code> block breaks line.
+</div>
+<div>
+<span id="first-span">A <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/span"><code>span</code></a> is a generic inline container.</span>
+<span>Therefore, a <code>span
+    </code> blocks do not break line.</span>
+<span class="classy">This is a classy span.</span>
+<span class="classy">This is another classy span.</span>
+</div>
+' width="100%" height="100px"></iframe>
+
+
+<h1>CSS - Selectors</h1>
+<iframe srcdoc='
+<style>
+    /* ID: tag#id */
+    /* multiple selectors can be separated by comma */
+    #first-div, #first-span {
+      font-weight: bold;
+    }
+    
+    /* Classes: tag.class */
+    span.classy{
+      font-family: Helvetica;
+    }
+    
+    /* attribute -- in this case similar to span.classy */
+    span[class=classy]{
+      color: #364dc2;
+    }
+    
+    
+    /* Pseudo-classes: a:hover, div:first-child */
+    a:hover{
+      color: red;
+    }
+    
+    span:first-child{
+      background-color: #EEE;
+    }
+    /* Descendant: A D */
+    div a{
+      color: blue;
+    }
+    /* Child: A > C */
+    div > a{
+      text-transform: uppercase;
+      font-style: italic;
+    }
+    /* Next Sibling: A + C */
+    span#first-span + span {
+      text-decoration: underline;
+    }
+</style>
+<div id="first-div">
+A <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div"><code>div</code></a> is a generic block-level container.
+</div>
+<div id="second-div">
+A <code>div</code> block breaks line.
+</div>
+<div>
+<span id="first-span">
+    A <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div"><code>span</code></a> 
+    is a generic inline container.
+</span>  
+<span>Therefore, a <code>span
+    </code> blocks do not break line.</span>
+<span class="classy">This is a classy span.</span>
+<span class="classy">This is another classy span.</span>
+</div>
+' width="100%" height="100px"></iframe>
+
+
+<h1>CSS - Position Static</h1>
+<iframe srcdoc='
+<style>
+    #example div{
+        display: inline-block;
+        margin: 10px;
+        padding: 2px;
+        width: 90px;
+        height: 90px;
+        border: 3px solid #a00;
+        background-color: red;
+        color: white;  
+      }
+</style>
+<div id="example">
+    <div>First</div>
+    <div id="second">Second</div>
+    <div>Third</div>
+  </div>
+' width="100%" height="150px"></iframe>
+
+
+<h1>CSS - Position Relative</h1>
+<iframe srcdoc='
+<style>
+#second{
+    position: relative;
+    top: 20px;
+    left: 20px;  
+}
+
+#example div{
+    display: inline-block;
+    margin: 10px;
+    padding: 2px;
+    width: 90px;
+    height: 90px;
+    border: 3px solid #a00;
+    background-color: red;
+    color: white;  
+}
+</style>
+<div id="example">
+    <div>First</div>
+    <div id="second">Second</div>
+    <div>Third</div>
+</div>
+' width="100%" height="150px"></iframe>
+
+
+<h1>CSS - Position Absolute</h1>
+<iframe srcdoc='
+<style>
+    #second{
+        position: absolute;
+        top: 30px;
+        left: 30px;  
+      }
+      
+      #example {
+        padding: 10px;
+      }
+      
+      #example div{
+        display: inline-block;
+        margin: 10px;
+        padding: 2px;
+        width: 100px;
+        height: 100px;
+        border: 3px solid #a00;
+        background-color: red;
+        color: white;  
+      }
+</style>
+<div id="example">
+    <div>First</div>
+    <div id="second">Second</div>
+    <div>Third</div>
+  </div>
+' width="100%" height="170px"></iframe>
+
+
+<h1>CSS - Position absolute (child) under relative (parent)</h1>
+<iframe srcdoc='
+<style>
+    body {
+        position: relative;
+      }
+      
+      #second{
+        position: absolute;
+        top: 30px;
+        left: 30px;  
+      }
+      
+      #example {
+        padding: 10px;
+      }
+      
+      #example div{
+        display: inline-block;
+        margin: 10px;
+        padding: 2px;
+        width: 90px;
+        height: 90px;
+        border: 3px solid #a00;
+        background-color: red;
+        color: white;  
+      }
+</style>
+<div id="example">
+    <div>First</div>
+    <div id="second">Second</div>
+    <div>Third</div>
+  </div>
+' width="100%" height="170px"></iframe>
+
+
+<h1>SVG - Shapes</h1>
+<iframe srcdoc='
+<svg>
+    <line x1="5" x2="5" y1="100" y2="30" stroke="black"/>
+    <line x1="100" x2="150" y1="220" y2="40" stroke="black"/>
+    <rect x="150" y="150" width="15" height="15"/>
+    <rect x="220" y="90" width="15" height="15"/>
+    <circle cx="150" cy="75" r="7"/>
+    <circle cx="80" cy="85" r="7"/>
+    <ellipse cx="180" cy="30" rx="15" ry="25"/>
+    <text x="160" y="120">Hello!</text>
+  </svg>
+' width="100%" height="200px"></iframe>
+
+
+<h1>SVG + CSS</h1>
+<iframe srcdoc='
+<style>
+    rect{
+        fill: green;
+      }
+      
+      circle{
+        stroke: orange;
+        stroke-width: 3;
+      }
+</style>
+<svg>
+    <line x1="5" x2="5" y1="5" y2="200" stroke="black"/>
+    <line x1="5" x2="350" y1="200" y2="200" stroke="black"/>
+    <circle cx="250" cy="25" r="7"/>
+    <rect x="150" y="150" width="15" height="15"/>
+    <rect x="220" y="90" width="15" height="15"/>
+    <circle cx="150" cy="75" r="7"/>
+    <circle cx="80" cy="85" r="7"/>
+    <!--<ellipse cx="150" cy="25" rx="15" ry="25"/>-->
+    <text x="100" y="225">Manually Drawn Chart</text>
+  </svg>
+' width="100%" height="200px"></iframe>
+
+
+<h1>SVG - Polygon, Polyline</h1>
+<iframe srcdoc='
+<svg>
+    <polygon style="fill-rule: nonzero; fill: purple; stroke: black;"
+      points="48,16  16,96  96,48  0,48  80,96" />
+    <polygon style="fill-rule: evenodd;  fill: yellow; stroke: black;"
+      points="148,16  116,96  196,48  100,48  180,96" />
+    <polyline fill="none" stroke="blue" stroke-width="2"
+       points="05,130
+               15,130
+               15,120
+               25,120
+               25,110
+               35,110" />
+  </svg>
+  <!-- applied from http://oreilly.com/catalog/svgess/chapter/ch03.html#t5 -->
+' width="100%" height="170px"></iframe>
+
+
+<h1>SVG - Path Example</h1>
+<iframe srcdoc='
+<svg> <!--small multiples -->
+    <path d="M 10 50 h 20 l 10 -20 l 20 10 l 30 10 l 5 -30 l 25 30" fill="none" stroke="black"/>
+    <path d="M 10 100 h 20 l 15 -20 l 10 -15 l 10 35  l 10 -20 l 20 10 l 30 10" fill="none" stroke="black"/>
+    <path d="M 10 150 l 15 -10 l 10 -15 h 20 l 10 20 l 10 -25 l 20 10 l 30 10" fill="none" stroke="black"/>
+  </svg>
+' width="100%" height="170px"></iframe>
+
+
+<h1>SVG - Group, Title & Transform</h1>
+<iframe srcdoc='
+<style>
+    .logo-i{
+        fill: #808284;
+      }
+      
+      .logo-d{
+        fill: #51187D;
+      }
+      
+      .logo-l{
+        fill: #CA9A1E;
+      }
+</style>
+<svg width="99" height="85">
+    <g transform="translate(50,39)">
+      <g transform="rotate(25)">
+        <rect class="logo-i" x="-24" y="-14" width="6" height="6"></rect>
+        <rect class="logo-i" x="-24" y="0" width="6" height="6"></rect>
+        <rect class="logo-i" x="-24" y="7" width="6" height="6"></rect>
+        <rect class="logo-i" x="-24" y="14" width="6" height="6"></rect>
+      </g>
+      <g transform="scale(0.8)">
+        <rect class="logo-d" x="0" y="0" width="6" height="6"></rect>
+        <rect class="logo-d" x="-7" y="0" width="6" height="6"></rect>
+        <rect class="logo-d" x="-14" y="0" width="6" height="6"></rect>
+        <rect class="logo-d" x="0" y="-7" width="6" height="6"></rect>
+        <rect class="logo-d" x="0" y="-14" width="6" height="6"></rect>
+        <rect class="logo-d" x="0" y="7" width="6" height="6"></rect>
+        <rect class="logo-d" x="0" y="14" width="6" height="6"></rect>
+        <rect class="logo-d" x="-14" y="7" width="6" height="6"></rect>
+        <rect class="logo-d" x="-14" y="14" width="6" height="6"></rect>
+        <rect class="logo-d" x="-7" y="14" width="6" height="6"></rect>
+      </g>
+      <g transform="skewX(5)">
+        <rect class="logo-l" x="11" y="-14" width="6" height="6"></rect>
+        <rect class="logo-l" x="11" y="-7" width="6" height="6"></rect>
+        <rect class="logo-l" x="11" y="0" width="6" height="6"></rect>
+        <rect class="logo-l" x="11" y="7" width="6" height="6"></rect>
+        <rect class="logo-l" x="11" y="14" width="6" height="6"></rect>
+        <rect class="logo-l" x="18" y="14" width="6" height="6"></rect>
+      </g>
+    </g>
+  </svg>
+' width="100%" height="110px"></iframe>
+
+
+<h1>SVG - No-layer</h1>
+<iframe srcdoc='
+<!-- an example from http://alignedleft.com/tutorials/d3/an-svg-primer-->
+<svg height=50>
+<rect x="0" y="0" width="30" height="30" fill="purple"/>
+<rect x="20" y="5" width="30" height="30" fill="blue"/>
+<rect x="40" y="10" width="30" height="30" fill="green"/>
+</svg>
+' width="100%" height="75px"></iframe>
+
+
+<h1>SVG - Transparency</h1>
+<iframe srcdoc='
+<!-- modified from http://alignedleft.com/tutorials/d3/an-svg-primer--> 
+<svg>
+  <g transform="translate(10,10)">
+    <circle cx="25" cy="25" r="20" fill="rgba(128, 0, 128, 1.0)" />
+    <circle cx="50" cy="25" r="20" fill="rgba(0, 0, 255, 0.75)" />
+    <circle cx="75" cy="25" r="20" fill="rgb(0, 255, 0)" opacity="0.5"/> 
+  </g>
+  <g transform="translate(10,70)">
+    <circle cx="25" cy="25" r="20" fill="rgba(128, 0, 128, 0.75)" stroke="rgba(0, 255, 0, 0.25)" stroke-width="10" />
+    <circle cx="75" cy="25" r="20" fill="rgba(0, 255, 0, 0.75)" stroke="rgba(0, 0, 255, 0.25)" stroke-width="10" />
+    <circle cx="125" cy="25" r="20" fill="rgba(255, 255, 0, 0.75)" stroke="rgba(255, 0, 0, 0.25)" stroke-width="10" />
+  </g>
+  <g transform="translate(10,140)">
+    <circle cx="25" cy="25" r="20" fill="purple" stroke="green" stroke-width="10" opacity="0.9" />
+    <circle cx="65" cy="25" r="20" fill="green" stroke="blue" stroke-width="10" opacity="0.5" />
+    <circle cx="105" cy="25" r="20" fill="yellow" stroke="red" stroke-width="10" opacity="0.1" />
+  </g>
+</svg>
+' width="100%" height="175px"></iframe>
+</body>
+</html>

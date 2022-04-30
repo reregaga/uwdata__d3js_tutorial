@@ -1,0 +1,531 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3 Part 1</title>
+</head>
+<body>
+<h1>SELECTIONS - .select()</h1>
+<iframe srcdoc='
+<style>
+svg{ width:500px;height:300px; }
+svg rect{ fill:#ccc;stroke:gray;stroke-width:2px; }
+</style>
+
+<div><button onclick="run();" id="run">Run A</button></div>
+<svg>
+    <rect x="150" y="100" width="60" height="150"></rect>
+</svg>
+
+<script src="./d3.v7.min.js"></script>
+<script>
+var svg = d3.select("svg")
+var run = function() {
+var myRect = svg.select("rect")
+myRect.attr("width", 100)
+myRect.attr("height", 100)
+myRect.style("fill", "steelblue")
+}
+</script>
+' width="100%" height="350px"></iframe>
+
+
+<h1>SELECTIONS - .select() + .attr(), .style()</h1>
+<iframe srcdoc='
+<style>
+svg{width:500px;height:300px;}
+svg rect{fill:#ccc;stroke:gray;stroke-width:2px;}
+</style>
+<script src="./d3.v7.min.js"></script>
+<!-- Modified from http://vadim.ogievetsky.com/IntroD3-->
+<div>
+  <button onclick="runA();">Run A </button><button onclick="runB();">Run B </button><!--<button onclick="runC();">Run C </button>-->
+</div>
+<svg>
+  <rect x="200" y="100" width="40" height="50"></rect>
+</svg>
+
+<script>
+var svg = d3.select("svg");
+function runA() { //non-chain
+  var rect = svg.select("rect");
+  rect.attr("width", 90);
+  rect.attr("height", 90);
+  rect.style("fill", "steelblue");
+}
+function runB() { //or chain
+  svg.select("rect").attr("width", 100).attr("height", 100).style("fill", "steelblue");
+}
+/*
+function runC() { //or chain with param object
+  d3.select("svg").select("rect").attr({ "width": 100, "height": 100 }).style({ "fill": "steelblue" });
+}
+//https://stackoverflow.com/questions/38684597/cannot-use-attr-with-an-object-in-d3-v4
+//from D3 v4 onwards you cannot use objects to set attr or style anymore. To do so, you have to reference the mini library D3-selection-multi: src="https://d3js.org/d3-selection-multi.v0.4.min.js"
+*/
+</script>
+' width="100%" height="350px"></iframe>
+
+
+<h1>SELECTIONS - .selectAll()</h1>
+<iframe srcdoc='
+<style>
+svg{width:500px;height:300px;}
+svg rect{fill:#ccc;stroke:gray;stroke-width:2px;}
+</style>
+<script src="./d3.v7.min.js"></script>
+<!-- Modified from http://vadim.ogievetsky.com/IntroD3-->
+<div>
+    <button onclick="runA();">Run A </button>
+    <button onclick="runB();">Run B </button>
+</div>
+<svg>
+    <rect x="200" y="100" width="40" height="50"></rect>
+    <rect x="100" y="20" width="30" height="50"></rect>
+    <rect x="10" y="200" width="25" height="90"></rect>
+</svg>
+
+<script>
+var svg = d3.select("svg");
+function runA() { //non-chain
+    var rect = svg.selectAll("rect");
+    rect.attr("width", 90);
+    rect.attr("height", 90);
+    rect.style("fill", "steelblue");
+}
+function runB() { //or chain
+    svg.selectAll("rect").attr("width", 50).attr("height", 50).style("fill", "steelblue");
+}
+</script>
+' width="100%" height="350px"></iframe>
+
+
+<h1>.data()</h1>
+<span>See console</span>
+<iframe srcdoc='
+<script src="./d3.v7.min.js"></script>
+<style>svg{width:500px;height:300px;}svg rect{fill:#ccc;stroke:gray;stroke-width:2px;}</style>
+<div><button onclick="run();">Run </button></div>
+<svg>
+  <rect x="200" y="100" width="40" height="50"></rect>
+  <rect x="100" y="20" width="30" height="50"></rect>
+  <rect x="10" y="200" width="25" height="90"></rect>
+</svg>
+<script>
+function run(){
+  var svg = d3.select("svg");
+  var data =[127, 61, 256];
+  var rects = svg.selectAll("rect")
+    .data(data)
+    .attr("x", 0)
+    .attr("y", function(d,i) { return i*30+30 })
+    .attr("width", function(d,i) { return d; })
+    .attr("height", 20)
+    .style("fill", "steelblue")
+  console.log(rects);
+}
+</script>
+' width="100%" height="350px"></iframe>
+
+
+<h1>.data() - as objects </h1>
+<span>See console</span>
+<iframe srcdoc='
+<script src="./d3.v7.min.js"></script>
+<div><button onclick="run();">Run </button></div>
+<svg width=250 height=250>
+  <circle cx="30" cy="40" r="5"></circle>
+  <circle cx="50" cy="60" r="5"></circle>
+  <circle cx="80" cy="30" r="5"></circle>
+  <circle cx="10" cy="70" r="5"></circle>
+</svg>
+
+<script>
+function run(){
+  var svg = d3.select("svg");
+  var data = [
+      {x: 100, y: 194},
+      {x:  80, y: 184},
+      {x: 130, y: 74},
+      {x:  90, y: 87}
+    ];
+  
+  var circles = svg.selectAll("circle")
+    .data(data)
+    .attr("cx", function(d){return d.x;})
+    .attr("cy", function(d){return d.y;})
+    .style("fill", function(d){
+      return d.x >= 100 ? "red" : "steelblue";
+    });
+
+  console.log(circles);
+}
+</script>
+' width="100%" height="300px"></iframe>
+
+
+<h1>.data() - Less or More elements, not exact match.</h1>
+<iframe srcdoc='
+<script src="./d3.v7.min.js"></script>
+<!-- Modified from http://vadim.ogievetsky.com/IntroD3-->
+<div>
+    <button onclick="runLess();">Less data</button>
+    <button onclick="runMore();">More data</button>
+</div>
+<svg width=500 height=300>
+  <rect x="200" y="100" width="40" height="50"></rect>
+  <rect x="100" y="20" width="30" height="50"></rect>
+  <rect x="10" y="200" width="25" height="90"></rect>
+</svg>
+<script>
+var svg = d3.select("svg");
+
+function runMore(){
+    svg.selectAll("rect")
+    .data([127, 61, 256, 23])
+    .attr("x", 0)
+    .attr("y", function(d,i) { return i*30+30 })
+    .attr("width", function(d,i) { return d; })
+    .attr("height", 20)
+    .style("fill", "steelblue")
+}
+
+function runLess(){
+    svg.selectAll("rect")
+    .data([43, 66])
+    .attr("x", 0)
+    .attr("y", function(d,i) { return i*30+30 })
+    .attr("width", function(d,i) { return d; })
+    .attr("height", 20)
+    .style("fill", "steelblue")
+}
+</script>
+' width="100%" height="350px"></iframe>
+
+
+<h1>.enter()</h1>
+<iframe srcdoc='
+<script src="./d3.v7.min.js"></script>
+<button onclick="run();">Run </button>
+<svg width=400 height=300>
+  <rect x="200" y="100" width="40" height="50"></rect>
+  <rect x="100" y="20" width="30" height="50"></rect>
+  <rect x="10" y="200" width="25" height="90"></rect>
+</svg>
+<script>
+function run(){
+  var svg = d3.select("svg");
+  // 4 data items
+  var selection = svg.selectAll("rect")
+    .data([127, 61, 256, 71]);
+
+  selection
+    .attr("x", 0)
+    .attr("y", function(d,i) { return i*30+30 })
+    .attr("width", function(d,i) { return d; })
+    .attr("height", 20)
+    .style("fill", "steelblue");
+
+  selection.enter().append("rect")
+    .attr("x", 0)
+    .attr("y", function(d,i) { return i*30+30 })
+    .attr("width", function(d,i) { return d; })
+    .attr("height", 20)
+    .style("fill", "steelblue");
+}
+</script>
+' width="100%" height="350px"></iframe>
+
+
+<h1>.enter() from scratch</h1>
+<iframe srcdoc='
+<script src="./d3.v7.min.js"></script>
+<div><button onclick="run();">Run </button></div>
+<svg width=400 height=300></svg>
+<script>
+function run(){
+  var svg = d3.select("svg");
+  // 4 data items
+  var selection = svg.selectAll("rect")
+    .data([127, 61, 256, 71]);
+  selection.enter().append("rect")//;
+  //selection
+    .attr("x", 0)
+    .attr("y", function(d,i) { return i*30+30 })
+    .attr("width", function(d,i) { return d; })
+    .attr("height", 20)
+    .style("fill", "steelblue");
+}
+</script>
+' width="100%" height="350px"></iframe>
+
+
+<h1>.exit()</h1>
+<iframe srcdoc='
+<script src="./d3.v7.min.js"></script>
+<div><button onclick="run();">Run </button></div>
+<svg width=500 height=300>
+  <rect x="200" y="100" width="40" height="50"></rect>
+  <rect x="100" y="20" width="30" height="50"></rect>
+  <rect x="10" y="200" width="25" height="90"></rect>
+</svg>
+<script>
+function run(){
+  var svg = d3.select("svg");
+  // 4 data items
+  var selection = svg.selectAll("rect")
+    .data([127, 61]);
+  selection.attr("x", 0)
+    .attr("y", function(d,i) { return i*30+30 })
+    .attr("width", function(d,i) { return d; })
+    .attr("height", 20)
+    .style("fill", "steelblue");
+  selection.exit().remove();
+}
+</script>
+' width="100%" height="350px"></iframe>
+
+
+<h1>Transitions - .transition()</h1>
+<span>Animation</span>
+<iframe srcdoc='
+<script src="./d3.v7.min.js"></script>
+<div><button onclick="run();">Run </button></div>
+<svg width=500 height=300>
+    <rect x="200" y="100" width="40" height="50"></rect>
+    <rect x="100" y="20" width="30" height="50"></rect>
+    <rect x="10" y="200" width="25" height="90"></rect>
+</svg>
+<script>
+function run(){
+    var svg = d3.select("svg");
+    svg.selectAll("rect")
+        .data([127, 61, 256])
+        .transition()
+        .duration(1500)  // 1.5 second
+        .attr("x", 0)
+        .attr("y", function(d,i) { return i*90+50; })
+        .attr("width", function(d,i) { return d; })
+        .attr("height", 20)
+        .style("fill", "steelblue");
+    
+}
+</script>
+' width="100%" height="350px"></iframe>
+
+
+<h1>Transitions - Nested .transition() & .delay()</h1>
+<iframe srcdoc='
+<script src="./d3.v7.min.js"></script>
+<div><button onclick="run();">Run </button></div>
+<svg width=500 height=300>
+    <rect x="200" y="100" width="40" height="50"></rect>
+    <rect x="100" y="20" width="30" height="50"></rect>
+    <rect x="10" y="200" width="25" height="90"></rect>
+</svg>
+<script>
+function run(){
+    var svg = d3.select("svg");
+    svg.selectAll("rect")
+        .data([127, 61, 256])
+        .transition()
+        .duration(1500) // 1.5 seconds
+            .attr("x", 0)
+            .attr("y", function(d,i) { return i*90+50; })
+            .attr("width", function(d,i) { return d; })
+            .attr("height", 20)
+            .style("fill", "steelblue")
+        .transition()
+        .duration(1500) // 1.5 seconds
+            .attr("x", 0)
+            .attr("y", function(d,i) { return i*30+30; })
+            .attr("width", function(d,i) { return i*30+d; })
+            .attr("height", 20)
+            .style("fill", "green");
+}
+</script>
+' width="100%" height="350px"></iframe>
+
+
+<h1>Mapping Data to Elements</h1>
+<iframe srcdoc='
+<script src="./d3.v7.min.js"></script>
+<div><button onclick="run();">Run </button></div>
+<svg width=500 height=300></svg>
+<script>
+var data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120];
+var svg = d3.select("svg");
+svg.selectAll("rect")
+.data(data)
+.enter().append("rect")
+    .attr("x", function(d,i) { return i*20+30; })
+    .attr("y", function(d,i){return 200-d;})
+    .attr("width", 10)
+    .attr("height", function(d,i) { return d; })
+    .style("fill", "steelblue");
+function run(){
+    var first = data.shift();
+    data.push(first);
+    svg.selectAll("rect")
+    .data(data)
+    .transition()
+    .duration(1000) // 3 seconds
+        .attr("x", function(d,i) { return i*20+30; })
+        .attr("y", function(d,i){return 200-d;})
+        .attr("width", 10)
+        .attr("height", function(d,i) { return d; });
+}
+</script>
+' width="100%" height="350px"></iframe>
+
+
+<h1>Join key - .data(...,key)</h1>
+<iframe srcdoc='
+<script src="./d3.v7.min.js"></script>
+<div><button onclick="run();">Run </button></div>
+<svg width=500 height=300></svg>
+<script>
+var I = function(d){return d;};
+var data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120];;
+
+var svg = d3.select("svg");
+svg.selectAll("rect")
+.data(data, I)
+.enter().append("rect")
+    .attr("x", function(d,i) { return i*20+30 })
+    .attr("y", function(d,i){return 200-d;})
+    .attr("width", 10)
+    .attr("height", function(d,i) { return d; })
+    .style("fill", "steelblue");
+
+function run(){
+    var first = data.shift();
+    data.push(first);
+    svg.selectAll("rect")
+    .data(data, I)
+    .transition()
+    .duration(1000) // 3 seconds
+        .attr("x", function(d,i) { return i*20+30 })
+        .attr("y", function(d,i){return 200-d;})
+        .attr("width", 10)
+        .attr("height", function(d,i) { return d; })
+}
+</script>
+' width="100%" height="350px"></iframe>
+
+<span>Notice how you can save lines of code with selection.call()</span>
+<iframe srcdoc='
+<script src="./d3.v7.min.js"></script>
+<div><button onclick="run();">Run </button></div>
+<svg width=500 height=300></svg>
+<script>
+var data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120];;
+var I = function(d,i)   {return i*20+30 };
+
+function updateRect(rect){
+    return rect.attr("x", I)
+    .attr("y", function(d,i){return 200-d;})
+    .attr("width", 10)
+    .attr("height", function(d,i) { return d; })
+    .style("fill", "steelblue");
+}  
+
+var svg = d3.select("svg");
+svg.selectAll("rect")
+.data(data, I)
+.enter().append("rect")
+    .call(updateRect);
+
+function run(){
+    var first = data.shift();
+    data.push(first);
+    svg.selectAll("rect")
+    .data(data, function(d){ return d; })
+    .transition()
+    .duration(1000) // 3 seconds
+        .call(updateRect)
+}
+</script>
+' width="100%" height="350px"></iframe>
+
+<span>New Data?</span>
+<iframe srcdoc='
+<script src="./d3.v7.min.js"></script>
+<div><button onclick="run();">Run </button></div>
+<svg width=500 height=300></svg>
+<script>
+var i=0;
+var data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120].map(function(x){return {id:i++, x:x};});
+
+var formatRect = function(sel){
+    sel.attr("x", function(d,i) { return i*20+30; })
+    .attr("y", function(d,i){return 200-d.x;})
+    .attr("width", 10)
+    .attr("height", function(d,i) { return d.x; })
+    .style("fill", "steelblue");
+    return sel; // should return object for chain calling.
+};
+
+var getId = function(d){return d.id;};
+
+var svg = d3.select("svg");
+svg.selectAll("rect")
+.data(data, getId)
+.enter().append("rect")
+    .call(formatRect);
+
+function run(){
+    data.shift(); //remove first
+    data.push({id:i, x: (i%15+1)*10 });
+    i++;
+    
+    console.log(data);
+    
+    var rects = svg.selectAll("rect")
+    .data(data, getId);
+    
+    rects.enter().append("rect");
+    
+    rects.transition()
+    .duration(1000) // 3 seconds
+    .call(formatRect);
+    
+    rects.exit()
+    .transition().duration(500)
+    .style("opacity","0")
+    .remove();
+
+}
+</script>
+' width="100%" height="350px"></iframe>
+
+
+<h1>Nested selections</h1>
+<iframe srcdoc='
+<script src="./d3.v3.5.17.min.js"></script>
+<svg width=200 height=300></svg>
+<script>
+var myData = [[15, 20],[40, 10],[30, 17]];
+var svg = d3.select("svg");
+// First selection (within svg)
+var selA = svg.selectAll("g").data(myData);
+selA.enter().append("g")//; //modification comment for work with d3 v7
+//selA                      //modification comment for work with d3 v7
+  .attr("transform", function(d,i) {
+    return "translate(70," + (i*100+50) + ")";
+  });
+selA.exit().remove();
+
+// Second selection (within first selection)
+var selB = selA.selectAll("circle")
+  .data(function(d) { return d; });
+selB.enter().append("circle")//; //modification comment for work with d3 v7 (NOT WORKED)
+//selB                           //modification comment for work with d3 v7 (NOT WORKED)
+  .attr("cx", function(d,i) { return i*80 })
+  .attr("r", function(d,i) { return d });
+selB.exit().remove();
+</script>
+' width="100%" height="350px"></iframe>
+</body>
+</html>

@@ -10,6 +10,7 @@ Printable version.
 - [Original](https://uwdata.github.io/d3-tutorials/d3-01.html)
 
 ## D3.js (2nd part)
+- This repo still in process #TODO
 - [Original](https://uwdata.github.io/d3-tutorials/d3-02.html)
 
 Spring 2016 [live demo (original)](https://uwdata.github.io/d3-tutorials/live/viewer.html)
